@@ -1,0 +1,96 @@
+import { React, useState } from "react";
+import { ClipBoardIcon } from "./icons/ClipBoardIcon";
+import { DeleteIcon } from "./icons/DeleteIcon";
+
+export const InputField = (props) => {
+  document.title = `TextUtils - Home`;
+  const [text, setText] = useState("");
+  const onChangeHandler = (event) => {
+    setText(event.target.value);
+  };
+  const convertToUpperCase = () => {
+    setText(text.toUpperCase());
+    props.showAlert(
+      "success",
+      "Success",
+      "Text has been changed to upper case"
+    );
+  };
+  const convertToLowerCase = () => {
+    setText(text.toLowerCase());
+    props.showAlert(
+      "success",
+      "Success",
+      "Text has been changed to lower case"
+    );
+  };
+  const convertToInverseCase = () => {
+    let newText = "";
+    const lowertext = text.toLowerCase();
+    const uppertext = text.toUpperCase();
+    for (let i = 0; i < text.length; i++) {
+      if (i % 2 === 0) newText += uppertext[i];
+      else newText += lowertext[i];
+    }
+    setText(newText);
+    props.showAlert(
+      "success",
+      "Success",
+      "Text has been changed to inverse case"
+    );
+  };
+  const copyToClipboard = () => {
+    navigator.clipboard.writeText(text);
+    props.showAlert("primary", "Success", "Copied to clipboard!");
+  };
+  const eraseText = () => {
+    setText("");
+    props.showAlert("warning", "Success", "Text erased");
+  };
+  return (
+    <div>
+      <h1 style={{ display: "inline" }}>Enter text to convert here:</h1>
+      <button
+        className="btn btn-link float-right mt-3"
+        onClick={copyToClipboard}
+      >
+        <ClipBoardIcon />
+      </button>
+      <button className="btn btn-link float-right mt-3" onClick={eraseText}>
+        <DeleteIcon />
+      </button>
+      <textarea
+        className="form-control my-2"
+        value={text}
+        onChange={onChangeHandler}
+        rows="8"
+        style={props.myStyle}
+      />
+      <button
+        className="btn btn-outline-primary m-1"
+        onClick={convertToUpperCase}
+      >
+        Convert to UPPER Case
+      </button>
+      <button
+        className="btn btn-outline-primary m-1"
+        onClick={convertToLowerCase}
+      >
+        Convert to lower Case
+      </button>
+      <button
+        className="btn btn-outline-primary m-1"
+        onClick={convertToInverseCase}
+      >
+        Convert to InVeRsE Case
+      </button>
+      <h2 className="mt-4">Your Text Summary:</h2>
+      <p>
+        {text.length > 0 ? text.trim().split(" ").length : 0} words and{" "}
+        {text.length} characters
+      </p>
+      <h2>Preview:</h2>
+      <p>{text}</p>
+    </div>
+  );
+};
