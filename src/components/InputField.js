@@ -51,15 +51,14 @@ export const InputField = (props) => {
   return (
     <div>
       <h1 style={{ display: "inline" }}>Enter text to convert here:</h1>
-      <button
-        className="btn btn-link float-right mt-3"
-        onClick={copyToClipboard}
-      >
-        <ClipBoardIcon />
-      </button>
-      <button className="btn btn-link float-right mt-3" onClick={eraseText}>
-        <DeleteIcon />
-      </button>
+      <div className="float-right">
+        <button className="btn btn-link" onClick={copyToClipboard}>
+          <ClipBoardIcon />
+        </button>
+        <button className="btn btn-link" onClick={eraseText}>
+          <DeleteIcon />
+        </button>
+      </div>
       <textarea
         className="form-control my-2"
         value={text}
