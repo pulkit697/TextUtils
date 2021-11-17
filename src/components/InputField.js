@@ -41,6 +41,7 @@ export const InputField = (props) => {
   };
   const copyToClipboard = () => {
     navigator.clipboard.writeText(text);
+    document.getSelection().removeAllRanges();
     props.showAlert("primary", "Success", "Copied to clipboard!");
   };
   const eraseText = () => {
@@ -67,18 +68,21 @@ export const InputField = (props) => {
         style={props.myStyle}
       />
       <button
+        disabled={text.length === 0}
         className="btn btn-outline-primary m-1"
         onClick={convertToUpperCase}
       >
         Convert to UPPER Case
       </button>
       <button
+        disabled={text.length === 0}
         className="btn btn-outline-primary m-1"
         onClick={convertToLowerCase}
       >
         Convert to lower Case
       </button>
       <button
+        disabled={text.length === 0}
         className="btn btn-outline-primary m-1"
         onClick={convertToInverseCase}
       >
@@ -86,11 +90,15 @@ export const InputField = (props) => {
       </button>
       <h2 className="mt-4">Your Text Summary:</h2>
       <p>
-        {text.length > 0 ? text.trim().split(" ").length : 0} words and{" "}
-        {text.length} characters
+        {
+          text.split(" ").filter((word) => {
+            return word.length !== 0;
+          }).length
+        }{" "}
+        words and {text.length} characters
       </p>
       <h2>Preview:</h2>
-      <p>{text}</p>
+      <p>{text.length === 0 ? "Nothing to preview" : text}</p>
     </div>
   );
 };
