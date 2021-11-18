@@ -41,7 +41,6 @@ export const InputField = (props) => {
   };
   const copyToClipboard = () => {
     navigator.clipboard.writeText(text);
-    document.getSelection().removeAllRanges();
     props.showAlert("primary", "Success", "Copied to clipboard!");
   };
   const eraseText = () => {
@@ -90,7 +89,7 @@ export const InputField = (props) => {
       <h2 className="mt-4">Your Text Summary:</h2>
       <p>
         {
-          text.split(" ").filter((word) => {
+          text.split(/\s+/).filter((word) => {
             return word.length !== 0;
           }).length
         }{" "}
